@@ -17,12 +17,9 @@ class PostManageTest extends TestCase
     function a_user_can_create_a_post()
     {
 
-        $this->withoutExceptionHandling();
-
-
         $this->signIn();
 
-        $this->get('/posts/create');
+        $this->get('/posts/create')->assertOk();
 
         $post = make('App\Post');
 
