@@ -24,7 +24,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('posts.create');
+        
     }
 
     /**
@@ -35,7 +37,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        return redirect(Post::create(request()->all())->path());
+
     }
 
     /**
@@ -46,7 +50,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        
+        return view('posts.show', compact('post'));
+
     }
 
     /**
