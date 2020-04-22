@@ -34,4 +34,27 @@ class PostManageTest extends TestCase
 
     }
 
+    /** @test */
+    function a_post_require_title()
+    {
+
+        $this->publishPost(['title' => null])
+            ->assertSessionHasErrors('title');
+
+    }
+
+
+
+    public function publishPost($overrides = [])
+    {
+
+        $this->signIn();
+
+        $post = make('App\Post', $overrides);
+
+        return $this->post('/posts', $post->toArray());
+
+    }
+
+
 }
