@@ -24,22 +24,4 @@ class TableTest extends TestCase
         $this->assertEquals(10, Post::count());
     }
 
-    // /** @test */
-    // public function can_create_users()
-    // {
-
-    //     $this->artisan('db:seed --class=UsersTableSeeder');
-
-    //     $this->assertEquals(3, User::count());
-    // }
-
-    // /** @test */
-    // public function can_create_post()
-    // {
-
-    //     $this->artisan('db:seed --class=PostsTableSeeder');
-
-    //     $this->assertEquals(10, Post::count());
-    // }
-
 }
