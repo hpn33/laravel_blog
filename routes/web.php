@@ -16,13 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/dashboard', 'DashboardController@index');
 
-
-Route::get('/posts/create', 'PostController@create');
-Route::post('/posts', 'PostController@store');
-Route::get('/posts/{post}', 'PostController@show');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/index', function() {
+	return view('blog.index');
+});
+
+Route::get('/show', function() {
+	return view('blog.show');
+});
