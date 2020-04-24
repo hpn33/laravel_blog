@@ -21,11 +21,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [
+    'uses' => 'HomeController@index',
+    'as' => 'home'
+]);
 
 
-Route::get('/index', 'BlogController@index');
+Route::get('/index', [
+    'uses' => 'BlogController@index',
+    'as' => 'blog'
+]);
 
-Route::get('/show', function() {
-	return view('blog.show');
+
+Route::get('/show', function () {
+    return view('blog.show');
 });

@@ -10,24 +10,25 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
+    protected $dates = ['published_at'];
+
 
     function getImageUrlAttribute()
     {
 
-    	$imageUrl = "";
+        $imageUrl = "";
 
-    	if (!is_null($this->image))
-    	{
+        if (!is_null($this->image)) {
 
-    		$imagePath = public_path("/img/{$this->image}");
+            $imagePath = public_path("/img/{$this->image}");
 
-    		if (file_exists($imagePath)) {
-    			$imageUrl = asset("img/{$this->image}");
-    		}
+            if (file_exists($imagePath)) {
+                $imageUrl = asset("img/{$this->image}");
+            }
 
-    	}
+        }
 
-    	return $imageUrl;
+        return $imageUrl;
 
     }
 
@@ -43,7 +44,7 @@ class Post extends Model
     function getDateAttribute()
     {
 
-        return $this->created_at->format('Y/mm/dd');
+        return $this->published_at->format('Y/m/d');
 
     }
 
@@ -57,7 +58,14 @@ class Post extends Model
     function scopeForIndexPage($query, $limit = 3)
     {
 
-        return $query->with('author')->latest()->simplePaginate($limit);
+        return $query->with('author')->published()->latestFirst()->simplePaginate($limit);
+
+    }
+
+    function scopePublished($query)
+    {
+
+        return $query->where('published_at', '<=', now());
 
     }
 

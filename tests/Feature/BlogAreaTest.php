@@ -24,6 +24,8 @@ class BlogAreaTest extends TestCase
         foreach ($posts as $post)
         {
 
+            $this->assertLessThanOrEqual(now()->timestamp, $post->published_at->timestamp);
+
             $response->assertSee($post->title)
                 ->assertSee($post->excerpt)
                 ->assertSee($post->author)
