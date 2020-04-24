@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Post;
 
 class BlogController extends Controller
 {
-    
+
+    protected $limit = 3;
+
 
     function index()
     {
 
-    	$posts = Post::all();
+    	$posts = Post::forIndexPage($this->limit);
 
     	return view('blog.index', compact('posts'));
 

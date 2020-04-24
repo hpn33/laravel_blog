@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
         // reset the users table
         // DB::statement('SET FOREIGN_KEY_CHECKS=0');
         User::truncate();

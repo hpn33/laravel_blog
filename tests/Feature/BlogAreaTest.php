@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Post;
 
@@ -16,8 +15,9 @@ class BlogAreaTest extends TestCase
     public function display_posts_in_index_page()
     {
 
-        $posts = factory(Post::class, 10)->create();
+        factory(Post::class, 10)->create();
 
+        $posts = Post::forIndexPage();
 
         $response = $this->get('/index')->assertOk();
 
@@ -25,9 +25,11 @@ class BlogAreaTest extends TestCase
         {
 
             $response->assertSee($post->title)
-                ->assertSee($post->excerpt);
-        
+                ->assertSee($post->excerpt)
+                ->assertSee($post->author)
+                ->assertSee($post->date);
+
         }
-    
+
     }
 }
