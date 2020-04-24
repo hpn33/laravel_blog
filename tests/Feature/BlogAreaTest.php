@@ -15,6 +15,7 @@ class BlogAreaTest extends TestCase
     public function display_posts_in_index_page()
     {
 
+        $this->withoutExceptionHandling();
         factory(Post::class, 10)->create();
 
         $posts = Post::forIndexPage();
@@ -34,4 +35,18 @@ class BlogAreaTest extends TestCase
         }
 
     }
+
+
+    /** @test */
+    function just_show_published_post()
+    {
+
+        factory(Post::class, 20)->create();
+
+        $this->assertEquals(
+            Post::where('published_at', '<=', now())->get()->count(),
+            Post::published()->count());
+
+    }
+
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static forIndexPage(int $limit = 3)
+ * @method static published()
  */
 class Post extends Model
 {
