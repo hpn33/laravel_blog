@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\User;
 use App\Post;
 
-class TableTest extends TestCase
+class SeedTest extends TestCase
 {
 
     use RefreshDatabase;

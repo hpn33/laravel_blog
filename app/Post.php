@@ -49,17 +49,10 @@ class Post extends Model
 
     }
 
-    function scopeLatestFirst($query)
-    {
-
-        return $query->orderBy('created_at', 'desc');
-
-    }
-
     function scopeForIndexPage($query, $limit = 3)
     {
 
-        return $query->with('author')->published()->latestFirst()->simplePaginate($limit);
+        return $query->with('author')->published()->orderBy('created_at', 'desc')->simplePaginate($limit);
 
     }
 

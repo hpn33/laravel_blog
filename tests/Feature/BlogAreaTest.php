@@ -36,17 +36,4 @@ class BlogAreaTest extends TestCase
 
     }
 
-
-    /** @test */
-    function just_show_published_post()
-    {
-
-        factory(Post::class, 20)->create();
-
-        $this->assertEquals(
-            Post::where('published_at', '<=', now())->get()->count(),
-            Post::published()->count());
-
-    }
-
 }
