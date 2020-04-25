@@ -28,7 +28,11 @@
                                 </ul>
                             </div>
 
-                            <p>{{ $post->body }}</p>
+                            <div>
+
+@markdown($post->body)
+
+                            </div>
                         </div>
                     </div>
                 </article>

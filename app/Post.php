@@ -2,6 +2,7 @@
 
 namespace App;
 
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -67,8 +68,8 @@ class Post extends Model
     /**
      * Retrieve the model for a bound value.
      *
-     * @param  mixed  $value
-     * @param  string|null  $field
+     * @param mixed $value
+     * @param string|null $field
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function resolveRouteBinding($value, $field = null)
@@ -85,6 +86,23 @@ class Post extends Model
         return $this->published_at == null ? '' : $this->published_at->format('Y/m/d');
 
     }
+
+
+    function getBodyHtmlAttribute()
+    {
+
+        return $this->body ? Markdown::convertToHtml($this->body) : '';
+
+    }
+
+
+    function getExcerptHtmlAttribute()
+    {
+
+        return $this->excerpt ? Markdown::convertToHtml($this->excerpt) : '';
+
+    }
+
 
     function scopeForIndexPage($query, $limit = 3)
     {

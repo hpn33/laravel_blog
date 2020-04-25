@@ -43,7 +43,7 @@ class BlogAreaTest extends TestCase
         $response = $this->get($post->path());
 
         $response->assertSee($post->title)
-            ->assertSee($post->body)
+            ->assertSeeTextInOrder(preg_split('/[\n\r]+/', $post->body ))
             ->assertSee($post->author->name)
             ->assertSee($post->date);
 

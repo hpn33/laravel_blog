@@ -23,7 +23,9 @@
                         <div class="post-item-body">
                             <div class="padding-10">
                                 <h2><a href="{{ $post->path() }}">{{ $post->title }}</a></h2>
-                                <p>{{ $post->excerpt }}</p>
+                                <div>
+                                    @markdown($post->excerpt)
+                                </div>
                             </div>
 
                             <div class="post-meta padding-10 clearfix">
