@@ -42,10 +42,47 @@ class Post extends Model
     }
 
 
+    /**
+     * @return bool
+     */
+    function not_published(): bool
+    {
+
+        return $this->published_at == null;
+
+    }
+
+
+    /**
+     * @return bool
+     */
+    function is_published(): bool
+    {
+
+        return !$this->not_published();
+
+    }
+
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+
+        return $this->whereNotNull('published_at')->where('slug', $value)->first();
+
+    }
+
+
     function getDateAttribute()
     {
 
-        return $this->published_at->format('Y/m/d');
+        return $this->published_at == null ? '' : $this->published_at->format('Y/m/d');
 
     }
 
@@ -71,7 +108,7 @@ class Post extends Model
     function path($extension = [])
     {
 
-        $path = "/{$this->id}";
+        $path = "/{$this->slug}";
 
         $type = gettype($extension);
 

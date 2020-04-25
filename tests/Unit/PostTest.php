@@ -4,10 +4,8 @@ namespace Tests\Unit;
 
 use App\Post;
 use App\User;
-use Faker\Generator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Faker\Generator as Faker;
 
 class PostTest extends TestCase
 {
@@ -42,7 +40,7 @@ class PostTest extends TestCase
 
         $post = create(Post::class);
 
-        $this->assertEquals("/{$post->id}", $post->path());
+        $this->assertEquals("/{$post->slug}", $post->path());
 
     }
 
@@ -56,7 +54,7 @@ class PostTest extends TestCase
 
         $extension = 'aa/a';
 
-        $this->assertEquals("/{$post->id}/{$extension}", $post->path($extension));
+        $this->assertEquals("/{$post->slug}/{$extension}", $post->path($extension));
 
 
         $extension = '';
@@ -67,7 +65,29 @@ class PostTest extends TestCase
 
         }
 
-        $this->assertEquals("/{$post->id}" . $extension, $post->path(['aa', 'a']));
+        $this->assertEquals("/{$post->slug}" . $extension, $post->path(['aa', 'a']));
+
+    }
+
+
+    /** @test */
+    function check_post_published()
+    {
+
+        $post = create(Post::class, ['published_at'=> now()]);
+
+        $this->assertTrue($post->is_published());
+
+    }
+
+
+    /** @test */
+    function check_post_unpublished()
+    {
+
+        $post = create(Post::class, ['published_at'=> null]);
+
+        $this->assertTrue($post->not_published());
 
     }
 

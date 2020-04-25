@@ -33,7 +33,7 @@ Route::get('/index', [
 ]);
 
 
-Route::get('/{post}', [
+Route::get('/{post:slug}', [
     'uses' => 'BlogController@show',
     'as' => 'blog.show'
 ]);

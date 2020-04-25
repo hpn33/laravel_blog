@@ -15,7 +15,6 @@ class BlogAreaTest extends TestCase
     public function display_posts_in_index_page()
     {
 
-        $this->withoutExceptionHandling();
         factory(Post::class, 10)->create();
 
         $posts = Post::forIndexPage();
@@ -41,7 +40,6 @@ class BlogAreaTest extends TestCase
     {
 
         $post = create(Post::class, ['published_at' => now()]);
-
         $response = $this->get($post->path());
 
         $response->assertSee($post->title)
@@ -49,8 +47,15 @@ class BlogAreaTest extends TestCase
             ->assertSee($post->author->name)
             ->assertSee($post->date);
 
-        $response->assertSee($post->author->name);
+    }
 
+    /** @test */
+    function cannot_show_unpublished_post()
+    {
+
+        $post = create(Post::class, ['published_at' => null]);
+
+        $this->get($post->path())->assertStatus(404);
 
     }
 
