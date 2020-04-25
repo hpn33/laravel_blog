@@ -63,4 +63,35 @@ class Post extends Model
 
     }
 
+
+    /**
+     * @param array|string $extension
+     * @return string
+     */
+    function path($extension = [])
+    {
+
+        $path = "/{$this->id}";
+
+        $type = gettype($extension);
+
+
+        if ($type === 'string') {
+
+            $path .= "/{$extension}";
+
+        } elseif ($type === 'array') {
+
+            foreach ($extension as $extend) {
+
+                $path .= '/' . $extend;
+
+            }
+
+        }
+
+        return $path;
+
+    }
+
 }
