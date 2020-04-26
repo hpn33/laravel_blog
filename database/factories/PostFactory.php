@@ -21,6 +21,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'image' => rand(0, 1) == 1 ? $image : NULL,
         'created_at' => $date,
         'updated_at' => $date,
-        'published_at' => rand(0, 1) == 0 ? null : tap(clone $date)->addDays(rand(0, 3))
+        'published_at' => rand(0, 1) == 0 ? null : tap(clone $date)->addDays(rand(0, 3)),
     ];
 });
