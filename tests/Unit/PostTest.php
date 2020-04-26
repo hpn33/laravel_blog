@@ -40,7 +40,7 @@ class PostTest extends TestCase
 
         $post = create(Post::class);
 
-        $this->assertEquals("/{$post->slug}", $post->path());
+        $this->assertEquals("/posts/{$post->slug}", $post->path());
 
     }
 
@@ -54,7 +54,7 @@ class PostTest extends TestCase
 
         $extension = 'aa/a';
 
-        $this->assertEquals("/{$post->slug}/{$extension}", $post->path($extension));
+        $this->assertEquals("/posts/{$post->slug}/{$extension}", $post->path($extension));
 
 
         $extension = '';
@@ -65,7 +65,7 @@ class PostTest extends TestCase
 
         }
 
-        $this->assertEquals("/{$post->slug}" . $extension, $post->path(['aa', 'a']));
+        $this->assertEquals("/posts/{$post->slug}" . $extension, $post->path(['aa', 'a']));
 
     }
 

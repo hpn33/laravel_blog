@@ -33,7 +33,13 @@ Route::get('/index', [
 ]);
 
 
-Route::get('/{post:slug}', [
+Route::get('/posts/{post:slug}', [
     'uses' => 'BlogController@show',
     'as' => 'blog.show'
+]);
+
+
+Route::get('/categories/{category:slug}', [
+    'uses' => 'BlogController@category',
+    'as' => 'category'
 ]);

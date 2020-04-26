@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Post;
@@ -14,7 +15,7 @@ class BlogAreaTest extends TestCase
     /** @test */
     public function display_posts_in_index_page()
     {
-
+        $this->withoutExceptionHandling();
         factory(Post::class, 10)->create();
 
         $posts = Post::forIndexPage();
@@ -39,11 +40,16 @@ class BlogAreaTest extends TestCase
     function detail_of_post_on_show_page()
     {
 
-        $post = create(Post::class, ['published_at' => now()]);
-        $response = $this->get($post->path());
+        $this->withoutExceptionHandling();
+        $category = create(Category::class);
+        $post = create(Post::class, [
+            'published_at' => now(),
+            'category_id' => $category->id
+        ]);
 
-        $response->assertSee($post->title)
-            ->assertSeeTextInOrder(preg_split('/[\n\r]+/', $post->body ))
+        $this->get($post->path())
+            ->assertSee($post->title)
+            ->assertSeeTextInOrder(preg_split('/[\n\r]+/', $post->body))
             ->assertSee($post->author->name)
             ->assertSee($post->date);
 
@@ -56,6 +62,27 @@ class BlogAreaTest extends TestCase
         $post = create(Post::class, ['published_at' => null]);
 
         $this->get($post->path())->assertStatus(404);
+
+    }
+
+
+    /** @test */
+    function show_post_on_category()
+    {
+
+        $this->withoutExceptionHandling();
+        $category = create(Category::class);
+        factory(Post::class, 10)->create([
+            'category_id' => $category->id
+        ]);
+
+        $posts = Post::filterBy($category)->forIndexPage(3);
+
+        $this->get($category->path())
+            ->assertOk()
+            ->assertSee($posts[0]->title)
+            ->assertSee($posts[1]->title)
+            ->assertSee($posts[2]->title);
 
     }
 

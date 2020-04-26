@@ -12,6 +12,39 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
+
+    /**
+     * @param array|string $extension
+     * @return string
+     */
+    function path($extension = [])
+    {
+
+        $path = "/posts/{$this->slug}";
+
+        switch (gettype($extension)) {
+            case 'string':
+
+                $path .= "/{$extension}";
+
+                break;
+            case 'array':
+
+                foreach ($extension as $extend) {
+
+                    $path .= '/' . $extend;
+
+                }
+
+                break;
+        }
+
+
+        return $path;
+
+    }
+
+
     protected $dates = ['published_at'];
 
 
@@ -39,6 +72,14 @@ class Post extends Model
     {
 
         return $this->belongsTo(User::class);
+
+    }
+
+
+    function category()
+    {
+
+        return $this->belongsTo(Category::class);
 
     }
 
@@ -111,6 +152,15 @@ class Post extends Model
 
     }
 
+
+    function scopeFilterBy($query, Category $category)
+    {
+
+        return $query->where('category_id', $category->id);
+
+    }
+
+
     function scopePublished($query)
     {
 
@@ -119,34 +169,5 @@ class Post extends Model
     }
 
 
-    /**
-     * @param array|string $extension
-     * @return string
-     */
-    function path($extension = [])
-    {
-
-        $path = "/{$this->slug}";
-
-        $type = gettype($extension);
-
-
-        if ($type === 'string') {
-
-            $path .= "/{$extension}";
-
-        } elseif ($type === 'array') {
-
-            foreach ($extension as $extend) {
-
-                $path .= '/' . $extend;
-
-            }
-
-        }
-
-        return $path;
-
-    }
 
 }
