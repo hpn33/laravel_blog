@@ -148,15 +148,9 @@ class Post extends Model
     function scopeForIndexPage($query, $limit = 3)
     {
 
-        return $query->with('author')->published()->orderBy('created_at', 'desc')->simplePaginate($limit);
-
-    }
-
-
-    function scopeFilterBy($query, Category $category)
-    {
-
-        return $query->where('category_id', $category->id);
+        return $query
+//            ->with('author')
+            ->published()->orderBy('created_at', 'desc')->simplePaginate($limit);
 
     }
 

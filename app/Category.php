@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static withPublishedPost()
+ */
 class Category extends Model
 {
 
@@ -45,14 +48,14 @@ class Category extends Model
 
     }
 
-    function scopeWithAvailablePost($query)
+    function scopeWithPublishedPost($query)
     {
 
         return $query->with(['posts' =>
             function ($query) {
                 $query->published();
             }])
-            ->orderBy('title', 'asc');
+            ->orderBy('title');
 
     }
 

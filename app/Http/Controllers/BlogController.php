@@ -14,13 +14,8 @@ class BlogController extends Controller
     function index()
     {
 
-        $categories = Category::with('posts')->orderBy('title', 'asc')->get();
-
-        $posts = Post::forIndexPage($this->limit);
-
-    	return view('blog.index', [
-            'posts' => $posts,
-            'categories' => $categories
+        return view('blog.index', [
+            'posts' => Post::forIndexPage($this->limit)
         ]);
 
     }
@@ -28,9 +23,7 @@ class BlogController extends Controller
     function show(Post $post)
     {
 
-        $categories = Category::orderBy('title', 'asc')->get();
-
-        return view('blog.show', compact('post', 'categories'));
+        return view('blog.show', compact('post'));
 
     }
 
@@ -38,13 +31,8 @@ class BlogController extends Controller
     function category(Category $category)
     {
 
-        $categories = Category::withAvailablePost()->get();
-        $posts = Post::filterBy($category)->forIndexPage($this->limit);
-//        dd($posts);
-
         return view('blog.index', [
-            'posts' => $posts,
-            'categories' => $categories
+            'posts' => $category->posts()->forIndexPage($this->limit)
         ]);
 
     }

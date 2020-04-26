@@ -76,13 +76,26 @@ class BlogAreaTest extends TestCase
             'category_id' => $category->id
         ]);
 
-        $posts = Post::filterBy($category)->forIndexPage(3);
+        $posts = $category->posts()->forIndexPage(3);
 
         $this->get($category->path())
             ->assertOk()
             ->assertSee($posts[0]->title)
             ->assertSee($posts[1]->title)
             ->assertSee($posts[2]->title);
+
+    }
+
+    /** @test */
+    function see_empty_message()
+    {
+
+        $category = create(Category::class);
+
+        $this->get($category->path())
+            ->assertSee('Nothing Found')
+            ->assertSee($category->title)
+            ->assertSee($category->title);
 
     }
 
