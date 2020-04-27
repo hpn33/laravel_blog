@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 class Post extends Model
 {
 
+//    protected $fillable = ['view_count'];
+
 
     /**
      * @param array|string $extension
