@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static forIndexPage(int $limit = 3)
  * @method static published()
+ * @method static byPopularity()
  */
 class Post extends Model
 {
@@ -162,6 +163,13 @@ class Post extends Model
 
     }
 
+
+    function scopeByPopularity($query)
+    {
+
+        return $query->orderBy('view_count', 'desc');
+
+    }
 
 
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Category;
+use App\Post;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -27,11 +28,14 @@ class ComposerServiceProvider extends ServiceProvider
 
         view()->composer('layouts.sidebar', function ($view) {
 
-//            dd(Category::with('posts')->get()->first());
-//            dd(Category::with('posts')->get());
-
-//            dd(Category::withPublishedPost()->get()->first()->posts->count());
             return $view->with('categories', Category::withPublishedPost()->get());
+
+        });
+
+
+        view()->composer('layouts.sidebar', function ($view) {
+
+            return $view->with('popularPost', Post::byPopularity()->published()->take(3)->get());
 
         });
 

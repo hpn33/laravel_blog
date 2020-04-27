@@ -15,6 +15,8 @@ $factory->define(Post::class, function (Faker $faker) {
 
     $title = $faker->sentence(rand(8, 12));
 
+    $isPublished = rand(0, 1) == 0;
+
     return [
         'author_id' => factory(User::class),
         'title' => $faker->sentence(rand(8, 12)),
@@ -22,8 +24,11 @@ $factory->define(Post::class, function (Faker $faker) {
         'body' => $faker->paragraphs(rand(10, 15), true),
         'slug' => Str::slug($title),
         'image' => rand(0, 1) == 1 ? $image : NULL,
+
         'created_at' => $date,
         'updated_at' => $date,
-        'published_at' => rand(0, 1) == 0 ? null : tap(clone $date)->addDays(rand(0, 3)),
+        'published_at' => $isPublished ? null : tap(clone $date)->addDays(rand(0, 3)),
+
+        'view_count' => $isPublished ? rand(0.0, 10.0) * 10 : 0
     ];
 });
