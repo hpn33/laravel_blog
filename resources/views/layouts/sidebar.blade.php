@@ -22,10 +22,16 @@
 
                     @foreach($categories as $category)
 
-                        <li>
-                            <a href="#"><i class="fa fa-angle-right"></i> {{ $category->title }}</a>
-                            <span class="badge pull-right">{{ $category->posts()->count() }}</span>
-                        </li>
+                        @if($category->posts->count())
+
+                            <li>
+                                <a href="{{ $category->path() }}">
+                                    <i class="fa fa-angle-right"></i> {{ $category->title }}
+                                </a>
+                                <span class="badge pull-right">{{ $category->posts->count() }}</span>
+                            </li>
+
+                        @endif
 
                     @endforeach
 

@@ -27,6 +27,10 @@ class ComposerServiceProvider extends ServiceProvider
 
         view()->composer('layouts.sidebar', function ($view) {
 
+//            dd(Category::with('posts')->get()->first());
+//            dd(Category::with('posts')->get());
+
+//            dd(Category::withPublishedPost()->get()->first()->posts->count());
             return $view->with('categories', Category::withPublishedPost()->get());
 
         });

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Category;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Post;
@@ -15,20 +16,18 @@ class BlogAreaTest extends TestCase
     /** @test */
     public function display_posts_in_index_page()
     {
-        $this->withoutExceptionHandling();
-        factory(Post::class, 10)->create();
 
-        $posts = Post::forIndexPage();
+        factory(Post::class, 10)->create();
 
         $response = $this->get('/index')->assertOk();
 
-        foreach ($posts as $post) {
+        foreach (Post::forIndexPage() as $post) {
 
             $this->assertLessThanOrEqual(now()->timestamp, $post->published_at->timestamp);
 
             $response->assertSee($post->title)
                 ->assertSee($post->excerpt)
-                ->assertSee($post->author->name)
+                ->assertSee($post->author->slug)
                 ->assertSee($post->date);
 
         }
@@ -40,7 +39,6 @@ class BlogAreaTest extends TestCase
     function detail_of_post_on_show_page()
     {
 
-        $this->withoutExceptionHandling();
         $category = create(Category::class);
         $post = create(Post::class, [
             'published_at' => now(),
@@ -70,24 +68,26 @@ class BlogAreaTest extends TestCase
     function show_post_on_category()
     {
 
-        $this->withoutExceptionHandling();
         $category = create(Category::class);
         factory(Post::class, 10)->create([
             'category_id' => $category->id
         ]);
 
-        $posts = $category->posts()->forIndexPage(3);
+        $posts = $category->posts()->published()->forIndexPage(3);
 
-        $this->get($category->path())
-            ->assertOk()
-            ->assertSee($posts[0]->title)
-            ->assertSee($posts[1]->title)
-            ->assertSee($posts[2]->title);
+        $response = $this->get($category->path())->assertOk();
+
+        foreach ($posts as $post)
+        {
+
+            $response->assertSee($post->title);
+
+        }
 
     }
 
     /** @test */
-    function see_empty_message()
+    function see_empty_message_on_category_page()
     {
 
         $category = create(Category::class);
@@ -96,6 +96,24 @@ class BlogAreaTest extends TestCase
             ->assertSee('Nothing Found')
             ->assertSee($category->title)
             ->assertSee($category->title);
+
+    }
+
+
+    /** @test */
+    function show_post_by_author()
+    {
+
+        $user = create(User::class);
+        factory(Post::class, 20)->create(['author_id' => $user->id]);
+
+        $posts = $user->posts()->forIndexPage(3);
+
+        $this->get($user->path())
+            ->assertOk()
+            ->assertSee($posts[0]->title)
+            ->assertSee($posts[1]->title)
+            ->assertSee($posts[2]->title);
 
     }
 

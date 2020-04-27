@@ -43,4 +43,38 @@ class User extends Authenticatable
         return $this->hasMany(Post::class, 'author_id');
 
     }
+
+
+
+    /**
+     * @param array|string $extension
+     * @return string
+     */
+    function path($extension = [])
+    {
+
+        $path = "/author/{$this->slug}";
+
+        switch (gettype($extension)) {
+            case 'string':
+
+                $path .= "/{$extension}";
+
+                break;
+            case 'array':
+
+                foreach ($extension as $extend) {
+
+                    $path .= '/' . $extend;
+
+                }
+
+                break;
+        }
+
+
+        return $path;
+
+    }
+
 }

@@ -34,7 +34,7 @@ class CategoryTest extends TestCase
 
         $category = create(Category::class);
 
-        $this->assertEquals("/categories/{$category->slug}", $category->path());
+        $this->assertEquals("/category/{$category->slug}", $category->path());
 
     }
 

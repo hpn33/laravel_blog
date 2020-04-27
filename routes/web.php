@@ -26,7 +26,6 @@ Route::get('/home', [
     'as' => 'home'
 ]);
 
-
 Route::get('/index', [
     'uses' => 'BlogController@index',
     'as' => 'blog'
@@ -39,7 +38,12 @@ Route::get('/posts/{post:slug}', [
 ]);
 
 
-Route::get('/categories/{category:slug}', [
+Route::get('/category/{category:slug}', [
     'uses' => 'BlogController@category',
     'as' => 'category'
+]);
+
+Route::get('/author/{author:slug}', [
+    'uses' => 'BlogController@author',
+    'as' => 'author'
 ]);

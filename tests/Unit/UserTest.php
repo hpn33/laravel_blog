@@ -24,4 +24,15 @@ class UserTest extends TestCase
 
     }
 
+
+    /** @test */
+    function has_a_path()
+    {
+
+        $user = create(User::class);
+
+        $this->assertEquals("/author/{$user->slug}", $user->path());
+
+    }
+
 }

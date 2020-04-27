@@ -18,7 +18,7 @@ class Category extends Model
     function path($extension = [])
     {
 
-        $path = "/categories/{$this->slug}";
+        $path = "/category/{$this->slug}";
 
         switch (gettype($extension)) {
             case 'string':

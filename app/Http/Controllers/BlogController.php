@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use App\User;
 
 class BlogController extends Controller
 {
@@ -32,8 +33,21 @@ class BlogController extends Controller
     {
 
         return view('blog.index', [
-            'posts' => $category->posts()->forIndexPage($this->limit)
+            'posts' => $category->posts()->forIndexPage($this->limit),
+            'categoryName' => $category->title
         ]);
 
     }
+
+
+    function author(User $author)
+    {
+
+        return view('blog.index', [
+            'posts' => $author->posts()->forIndexPage($this->limit),
+            'authorName' => $author->name
+        ]);
+
+    }
+
 }

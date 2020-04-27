@@ -6,21 +6,33 @@
         <div class="row">
             <div class="col-md-8">
 
-                @if(!$posts->count())
+                <div>
 
-                    <div class="alert alert-info">
-                        <p>Nothing Found</p>
-                    </div>
+                    @if(isset($categoryName))
 
-                @endif
+                        <div>
+                            <h2>Category: {{ $categoryName }}</h2>
+                        </div>
 
-                @if(isset($posts->first()->category))
+                    @endif
 
-                    <div>
-                        <h2>Category: {{ $posts->first()->category->title }}</h2>
-                    </div>
+                    @if(isset($authorName))
 
-                @endif
+                        <div>
+                            <h2>Author: {{ $authorName }}</h2>
+                        </div>
+
+                    @endif
+
+                    @if(!$posts->count())
+
+                        <div class="alert alert-info">
+                            <p>Nothing Found</p>
+                        </div>
+
+                    @endif
+
+                </div>
 
 
                 @foreach($posts as $post)
@@ -48,14 +60,19 @@
                             <div class="post-meta padding-10 clearfix">
                                 <div class="pull-left">
                                     <ul class="post-meta-group">
-                                        <li><i class="fa fa-user"></i><a href="#"> {{ $post->author->name }}</a></li>
-                                        <li><i class="fa fa-clock-o"></i>
+                                        <li>
+                                            <i class="fa fa-user"></i>
+                                            <a
+                                                href="{{$post->author->path()}}"> {{ $post->author->name }}</a>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-clock-o"></i>
                                             <time> {{ $post->date }}</time>
                                         </li>
 
                                         @if($post->category)
-                                            <li><i class="fa fa-tags"></i><a
-                                                    href="{{ $post->category->path() }}"> {{ $post->category->title }}</a>
+                                            <li><i class="fa fa-tags"></i>
+                                                <a href="{{ $post->category->path() }}"> {{ $post->category->title }}</a>
                                             </li>
                                         @endif
 
