@@ -4,6 +4,7 @@ namespace App;
 
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * @method static forIndexPage(int $limit = 3)
@@ -60,6 +61,28 @@ class Post extends Model
 
             if (file_exists($imagePath)) {
                 $imageUrl = asset("img/{$this->image}");
+            }
+
+        }
+
+        return $imageUrl;
+
+    }
+
+
+    function getImageThumbUrlAttribute()
+    {
+
+        $imageUrl = "";
+
+        if (!is_null($this->image)) {
+
+            $ext = substr(strchr($this->image, '/'), 1);
+            $thumbnail = Str::replaceFirst(".{$ext}", "_thumb.{$ext}", $this->image);
+            $imagePath = public_path("/img/{$thumbnail}");
+
+            if (file_exists($imagePath)) {
+                $imageUrl = asset("img/{$thumbnail}");
             }
 
         }
