@@ -42,25 +42,26 @@
                     </div>
                 </article>
 
+                <?php $author = $post->author; ?>
                 <article class="post-author padding-10">
                     <div class="media">
                         <div class="media-left">
-                            <a href="#">
-                                <img alt="Author 1" src="/img/author.jpg" class="media-object">
+                            <a href="{{ $author->path() }}">
+                                <img alt="{{ $author->name }}" src="{{ $author->gravatar() }}" class="media-object">
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading"><a href="{{ $post->author->path() }}">{{ $post->author->name }}</a></h4>
+                            <h4 class="media-heading"><a href="{{ $author->path() }}">{{ $author->name }}</a></h4>
                             <div class="post-author-count">
                                 <a href="#">
                                     <i class="fa fa-clone"></i>
-                                    <?php $postCount = $post->author->posts->count() ?>
+                                    <?php $postCount = $author->posts->count() ?>
                                     {{ $postCount }} {{ \Illuminate\Support\Str::plural('post', $postCount) }}
                                 </a>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad aut sunt cum, mollitia
-                                excepturi neque sint magnam minus aliquam, voluptatem, labore quis praesentium eum quae
-                                dolorum temporibus consequuntur! Non.</p>
+                            <div>
+                                {{ $author->bio }}
+                            </div>
                         </div>
                     </div>
                 </article>

@@ -36,20 +36,27 @@ class BlogAreaTest extends TestCase
 
 
     /** @test */
-    function detail_of_post_on_show_page()
+    function show_page_and_detail()
     {
+
+        $author = create(User::class);
 
         $category = create(Category::class);
         $post = create(Post::class, [
             'published_at' => now(),
-            'category_id' => $category->id
+            'category_id' => $category->id,
+            'author_id' => $author->id
         ]);
+
 
         $this->get($post->path())
             ->assertSee($post->title)
             ->assertSeeTextInOrder(preg_split('/[\n\r]+/', $post->body))
             ->assertSee($post->author->name)
-            ->assertSee($post->date);
+            ->assertSee($post->date)
+
+            ->assertSee($author->name)
+            ->assertSee($author->bio);
 
     }
 
@@ -77,8 +84,7 @@ class BlogAreaTest extends TestCase
 
         $response = $this->get($category->path())->assertOk();
 
-        foreach ($posts as $post)
-        {
+        foreach ($posts as $post) {
 
             $response->assertSee($post->title);
 

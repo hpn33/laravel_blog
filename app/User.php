@@ -45,6 +45,12 @@ class User extends Authenticatable
     }
 
 
+    function gravatar()
+    {
+
+        return "/img/author.jpg";
+
+    }
 
     /**
      * @param array|string $extension
