@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
 
-class HomeController extends BackendController
+class DashboardController extends BackendController
 {
     /**
      * Show the application dashboard.
@@ -14,6 +12,6 @@ class HomeController extends BackendController
      */
     public function index()
     {
-        return view('home');
+        return view('dashboard');
     }
 }

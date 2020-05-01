@@ -21,9 +21,9 @@ Route::get('/welcome', function () {
 
 Auth::routes();
 
-Route::get('/home', [
-    'uses' => 'HomeController@index',
-    'as' => 'home'
+Route::get('/dashboard', [
+    'uses' => 'Backend\DashboardController@index',
+    'as' => 'dashboard'
 ]);
 
 Route::get('/', [
