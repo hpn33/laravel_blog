@@ -175,8 +175,12 @@ class Post extends Model
     {
 
         return $query
-//            ->with('author')
-            ->published()->orderBy('created_at', 'desc')->simplePaginate($limit);
+            ->published()->orderBy('created_at', 'desc')
+
+            ->with('author')
+            ->with('category')
+
+            ->simplePaginate($limit);
 
     }
 

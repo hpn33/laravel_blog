@@ -14,7 +14,7 @@ class BlogController extends Controller
 
     function index()
     {
-        
+
         return view('blog.index', [
             'posts' => Post::forIndexPage($this->limit)
         ]);

@@ -10,54 +10,74 @@
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container">
+<header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#the-navbar-collapse" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">MyBlog</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#the-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">MyBlog</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="the-navbar-collapse">
-              <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="{{ route('blog') }}">Blog</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="{{ route('blog') }}">Blog</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+
+                    @if (Route::has('login'))
+                        @auth
+                            <li>
+                                <a href="{{ url('/home') }}">Dashboard</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="{{ route('login') }}">Login</a>
+                            </li>
+
+                            @if (Route::has('register'))
+                                <li>
+                                    <a href="{{ route('register') }}">Register</a>
+                                </li>
+                            @endif
+
+                        @endauth
+                    @endif
+                </ul>
             </div><!-- /.navbar-collapse -->
-          </div><!-- /.container -->
-        </nav>
-    </header>
+        </div><!-- /.container -->
+    </nav>
+</header>
 
-    @yield('content')
+@yield('content')
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <p class="copyright">&copy; 2016 Edo Masaru</p>
-                </div>
-                <div class="col-md-4">
-                    <nav>
-                        <ul class="social-icons">
-                            <li><a href="#" class="i fa fa-facebook"></a></li>
-                            <li><a href="#" class="i fa fa-twitter"></a></li>
-                            <li><a href="#" class="i fa fa-google-plus"></a></li>
-                            <li><a href="#" class="i fa fa-github"></a></li>
-                        </ul>
-                    </nav>
-                </div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <p class="copyright">&copy; 2016 Edo Masaru</p>
+            </div>
+            <div class="col-md-4">
+                <nav>
+                    <ul class="social-icons">
+                        <li><a href="#" class="i fa fa-facebook"></a></li>
+                        <li><a href="#" class="i fa fa-twitter"></a></li>
+                        <li><a href="#" class="i fa fa-google-plus"></a></li>
+                        <li><a href="#" class="i fa fa-github"></a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>
