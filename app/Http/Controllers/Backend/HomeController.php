@@ -7,7 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
-class DashboardController extends BackendController
+class HomeController extends BackendController
 {
     /**
      * Show the application dashboard.
@@ -16,6 +16,8 @@ class DashboardController extends BackendController
      */
     public function index()
     {
-        return view('dashboard');
+
+        return view('backend.home');
+
     }
 }

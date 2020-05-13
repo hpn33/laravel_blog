@@ -47,3 +47,7 @@ Route::get('/author/{author:slug}', [
     'uses' => 'BlogController@author',
     'as' => 'author'
 ]);
+
+Route::get('/home', 'Backend\HomeController@index');
+
+Route::resource('/backend/blog', 'Backend\BlogController');
