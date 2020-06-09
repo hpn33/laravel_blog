@@ -32,7 +32,8 @@ class BlogController extends BackendController
      */
     public function create()
     {
-        dd('create new blog post');
+
+        return redirect('/backend/blog/index');
     }
 
 
